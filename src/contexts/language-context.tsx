@@ -29,7 +29,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const translations: Record<Language, Record<string, string>> = {
     es: {
-      searchPlaceholder: "Buscar rap...",
+      searchPlaceholder: "Buscar letras...",
       noResultsFor: "No se encontraron resultados para",
       headline_part1: "Encuentra canciones, batallas o charlas de rap",
       headline_part2: "¡al instante!",
