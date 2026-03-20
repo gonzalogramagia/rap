@@ -17,6 +17,7 @@ export function MusicBrowser() {
     const { theme } = useTheme();
     const { videos } = useVideos();
     const { t } = useLanguage();
+    const playlistUrl = 'https://www.youtube.com/playlist?list=PLLswL1pDm9IxcKcBy5MbMFljNnQs2WVx8';
 
     const [search, setSearch] = useState("");
     const [activeTag, setActiveTag] = useState<string | null>(null);
@@ -130,7 +131,11 @@ export function MusicBrowser() {
                             <span className={`bg-clip-text text-transparent bg-gradient-to-r ${theme === 'dark' ? 'from-white to-cyan-200' : 'from-neutral-900 to-neutral-600'} block whitespace-pre-line drop-shadow-sm`}>
                                 {t('headline_part1')}
                             </span>
-                            <span className="text-[#48D1CC] block">
+                            <span
+                                className="text-[#48D1CC] block cursor-pointer hover:brightness-110 transition"
+                                onClick={() => window.open(playlistUrl, '_blank', 'noopener,noreferrer')}
+                                title="Abrir playlist en YouTube"
+                            >
                                 {t('headline_part2')}
                             </span>
                         </>

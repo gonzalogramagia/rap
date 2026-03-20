@@ -12,6 +12,27 @@ export default function VideoPlayerModal({ video, onClose }: VideoPlayerModalPro
     const [lyricsSearch, setLyricsSearch] = useState('');
     const [currentMatchIndex, setCurrentMatchIndex] = useState(0);
     const lyricsContainerRef = useRef<HTMLDivElement>(null);
+    const playlistId = 'PLLswL1pDm9IxcKcBy5MbMFljNnQs2WVx8';
+
+    const getVideoUrlWithPlaylist = (url: string) => {
+        if (!url) return '';
+
+        try {
+            const parsed = new URL(url);
+            if (!parsed.searchParams.get('list')) {
+                parsed.searchParams.set('list', playlistId);
+            }
+            return parsed.toString();
+        } catch {
+            return url.includes('?') ? `${url}&list=${playlistId}` : `${url}?list=${playlistId}`;
+        }
+    };
+
+    const openInYoutubePlaylist = () => {
+        const finalUrl = getVideoUrlWithPlaylist(video.url);
+        if (!finalUrl) return;
+        window.open(finalUrl, '_blank', 'noopener,noreferrer');
+    };
 
     // Initial search sync from home search
     useEffect(() => {
@@ -143,9 +164,19 @@ export default function VideoPlayerModal({ video, onClose }: VideoPlayerModalPro
 
                     {video.lyrics ? (
                         <>
+                            <div className="px-6 pt-6 pb-2 md:px-10">
+                                <button
+                                    type="button"
+                                    onClick={openInYoutubePlaylist}
+                                    className="text-left w-full font-bold text-neutral-900 dark:text-neutral-100 hover:text-[#48D1CC] transition-colors cursor-pointer"
+                                    title="Abrir en YouTube (playlist)"
+                                >
+                                    {video.name}
+                                </button>
+                            </div>
                             <div
                                 ref={lyricsContainerRef}
-                                className="flex-1 overflow-y-auto p-1/2 md:p-10 pt-16 md:pt-16 scrollbar-hide scroll-smooth"
+                                className="flex-1 overflow-y-auto p-1/2 md:p-10 pt-2 md:pt-2 scrollbar-hide scroll-smooth"
                             >
                                 <pre className="whitespace-pre-line font-sans leading-relaxed text-lg font-medium text-neutral-900 dark:text-neutral-50">
                                     {highlightedLyrics}
@@ -184,6 +215,14 @@ export default function VideoPlayerModal({ video, onClose }: VideoPlayerModalPro
                         </>
                     ) : (
                         <div className="flex-1 flex flex-col items-center justify-center p-12 text-center space-y-4">
+                            <button
+                                type="button"
+                                onClick={openInYoutubePlaylist}
+                                className="font-bold text-neutral-800 dark:text-neutral-100 hover:text-[#48D1CC] transition-colors cursor-pointer"
+                                title="Abrir en YouTube (playlist)"
+                            >
+                                {video.name}
+                            </button>
                             <div className="text-xl font-bold text-neutral-400 dark:text-zinc-600 animate-occasional-bounce select-none">
                                 Letra en proceso...
                             </div>
