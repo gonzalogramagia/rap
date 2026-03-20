@@ -25,6 +25,44 @@ export function MusicBrowser() {
   const [playingVideo, setPlayingVideo] = useState<Video | null>(null);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
+  const notLoadedSessionIds = new Set([
+    "bzrp-42",
+    "bzrp-63",
+    "bzrp-64",
+    "bzrp-65",
+    "bzrp-66",
+  ]);
+
+  const isSessionNavigable = (video: Video) =>
+    Boolean(video.url) && !notLoadedSessionIds.has(video.id);
+
+  const navigableVideos = useMemo(
+    () =>
+      videos.filter(isSessionNavigable).sort((a, b) => {
+        const numA = parseInt(a.id.split("-")[1]) || 0;
+        const numB = parseInt(b.id.split("-")[1]) || 0;
+        return numA - numB;
+      }),
+    [videos],
+  );
+
+  const currentNavigableIndex = useMemo(() => {
+    if (!playingVideo) return -1;
+    return navigableVideos.findIndex((v) => v.id === playingVideo.id);
+  }, [navigableVideos, playingVideo]);
+
+  const prevNavigableVideo =
+    currentNavigableIndex >= 0 && navigableVideos.length > 1
+      ? navigableVideos[
+          (currentNavigableIndex - 1 + navigableVideos.length) %
+            navigableVideos.length
+        ]
+      : null;
+  const nextNavigableVideo =
+    currentNavigableIndex >= 0 && navigableVideos.length > 1
+      ? navigableVideos[(currentNavigableIndex + 1) % navigableVideos.length]
+      : null;
+
   // Filter tags to show only those present in the current videos
   /*
     const allTags = useMemo(() => {
@@ -293,6 +331,18 @@ export function MusicBrowser() {
         <VideoPlayerModal
           video={playingVideo}
           onClose={() => setPlayingVideo(null)}
+          onPrev={
+            prevNavigableVideo
+              ? () => setPlayingVideo(prevNavigableVideo)
+              : undefined
+          }
+          onNext={
+            nextNavigableVideo
+              ? () => setPlayingVideo(nextNavigableVideo)
+              : undefined
+          }
+          hasPrev={Boolean(prevNavigableVideo)}
+          hasNext={Boolean(nextNavigableVideo)}
         />
       )}
     </div>

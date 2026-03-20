@@ -17,7 +17,7 @@ function AppContent() {
         className={`fixed inset-0 z-0 pointer-events-none ${theme === "light" ? "app-bg-waves opacity-100" : "opacity-0"}`}
       />
       <div
-        className={`fixed inset-0 z-[1] pointer-events-none bg-cover bg-center bg-fixed bg-no-repeat ${theme === "dark" ? "opacity-[0.16]" : "opacity-0"}`}
+        className={`fixed inset-0 z-[1] pointer-events-none bg-cover bg-center bg-fixed bg-no-repeat ${theme === "dark" ? "opacity-[0.14]" : "opacity-0"}`}
         style={{ backgroundImage: "url('/wallpaper.png')" }}
       />
       <div className="relative z-10 max-w-6xl mx-4 mt-8 lg:mx-auto">
