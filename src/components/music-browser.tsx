@@ -7,7 +7,7 @@ import { useTheme } from "../contexts/theme-context";
 
 function VideoItem({ children }: { children: React.ReactNode }) {
   return (
-    <div className="group bg-white dark:bg-zinc-900/50 rounded-2xl shadow-sm border border-gray-100 dark:border-zinc-800/50 overflow-hidden hover:shadow-xl dark:hover:shadow-[#48D1CC]/10 transition-all relative">
+    <div className="group bg-white dark:bg-zinc-900/35 rounded-2xl shadow-sm border border-gray-100 dark:border-zinc-800/50 overflow-hidden hover:shadow-xl dark:hover:shadow-[#48D1CC]/10 transition-all relative">
       {children}
     </div>
   );
@@ -127,7 +127,10 @@ export function MusicBrowser() {
           onClick={() => window.open("https://youtu.be/xrDZpAq2w7g", "_blank")}
           className="cursor-pointer h-64 md:h-80 w-auto object-contain hover:scale-110 hover:brightness-110 transition-all duration-500 -mt-8 -mb-4 md:mt-0 md:mb-0"
           style={{
-            filter: "drop-shadow(0 0 50px rgba(250, 204, 21, 0.25))",
+            filter:
+              theme === "dark"
+                ? "drop-shadow(0 0 50px rgba(250, 204, 21, 0.25))"
+                : "none",
           }}
         />
         <div className="flex flex-col items-center md:items-start md:gap-0">
@@ -155,10 +158,12 @@ export function MusicBrowser() {
       </div>
 
       {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-white dark:bg-[#0a0a0a] py-2 md:py-4 border-b border-neutral-200 dark:border-neutral-800 space-y-3">
-        <div className="flex items-center gap-4">
+      <div className="sticky top-0 z-50 py-2 md:py-3 pointer-events-none">
+        <div
+          className={`pointer-events-auto flex items-center gap-2 rounded-2xl backdrop-blur-md p-2 shadow-sm border ${theme === "dark" ? "border-neutral-700/80 bg-[#151515]/72" : "border-neutral-200/80 bg-white/85"}`}
+        >
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 w-5 h-5" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 w-5 h-5" />
             <input
               type="text"
               placeholder={t("searchPlaceholder")}
@@ -167,14 +172,14 @@ export function MusicBrowser() {
               onFocus={() => {
                 if (activeTag) setActiveTag(null);
               }}
-              className="w-full pl-10 pr-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-[#FACD00] transition-all text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400"
+              className={`w-full pl-14 pr-4 py-2 rounded-xl border focus:outline-none focus:ring-2 focus:ring-[#FACD00] transition-all placeholder:text-neutral-400 ${theme === "dark" ? "border-neutral-700 bg-[#0f0f12]/85 text-neutral-100" : "border-neutral-300 bg-white text-neutral-900"}`}
             />
           </div>
           <button
             onClick={() =>
               setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"))
             }
-            className="group flex items-center gap-2 px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-zinc-900 hover:border-[#FACD00] transition-all text-neutral-900 dark:text-neutral-100 cursor-pointer"
+            className={`group flex items-center gap-2 px-4 py-2.5 rounded-xl border hover:border-[#FACD00] hover:ring-1 hover:ring-[#FACD00] focus:outline-none transition-all cursor-pointer ${theme === "dark" ? "border-neutral-700 bg-[#0f0f12]/85 text-neutral-100" : "border-neutral-300 bg-white/80 text-neutral-900"}`}
             title={
               sortOrder === "asc" ? "Orden ascendente" : "Orden descendente"
             }
@@ -201,7 +206,7 @@ export function MusicBrowser() {
       >
         {filteredVideos.length === 0 && (
           <div className="col-span-full flex flex-col items-center justify-center py-20 text-neutral-500 space-y-4">
-            <div className="bg-neutral-100 dark:bg-zinc-900 p-4 rounded-full">
+            <div className="bg-neutral-100 dark:bg-zinc-900/70 p-4 rounded-full">
               <SearchX className="w-8 h-8 text-neutral-400" />
             </div>
             <div className="text-center">
@@ -226,7 +231,7 @@ export function MusicBrowser() {
               style={{ animationDelay: `${Math.min(index * 50, 600)}ms` }}
             >
               <VideoItem>
-                <div className="aspect-video bg-gray-100 dark:bg-zinc-800 relative group-hover:scale-105 transition-transform duration-500">
+                <div className="aspect-video bg-gray-100 dark:bg-zinc-800/75 relative group-hover:scale-105 transition-transform duration-500">
                   {video.url ? (
                     <div
                       onClick={() => setPlayingVideo(video)}
@@ -244,7 +249,7 @@ export function MusicBrowser() {
                       </div>
                     </div>
                   ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center bg-neutral-100 dark:bg-zinc-900 text-neutral-400 p-4">
+                    <div className="w-full h-full flex flex-col items-center justify-center bg-neutral-100 dark:bg-zinc-900/70 text-neutral-400 p-4">
                       <div className="w-12 h-12 rounded-full border-2 border-dashed border-neutral-300 dark:border-neutral-700 flex items-center justify-center mb-3">
                         <Play className="w-6 h-6 opacity-30" />
                       </div>

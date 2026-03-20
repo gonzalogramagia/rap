@@ -1,12 +1,40 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 /* Configuration for class-based dark mode in Tailwind v4 */
 @theme {
   --dark-mode: variant(.dark &);
 }
 
-@keyframes occasional-bounce {
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  transition: none !important;
+  animation: none !important;
+}
 
+.app-bg-dark {
+  background-color: #131313;
+  background-image: none;
+}
+
+.app-bg-waves {
+  background-color: #f5f5ef;
+  background-image:
+    radial-gradient(
+      1000px 280px at 50% -120px,
+      rgba(250, 205, 0, 0.14),
+      transparent 70%
+    ),
+    repeating-radial-gradient(
+      ellipse at 50% 120%,
+      rgba(0, 0, 0, 0.08) 0px,
+      rgba(0, 0, 0, 0.08) 2px,
+      transparent 2px,
+      transparent 28px
+    );
+}
+
+@keyframes occasional-bounce {
   0%,
   20%,
   50%,
@@ -51,14 +79,14 @@
   z-index: 10;
 }
 
-.bzrp-session-highlight>div {
+.bzrp-session-highlight > div {
   background-color: #facd00 !important;
-  border-color: #FACD00 !important;
+  border-color: #facd00 !important;
   box-shadow: 0 0 30px rgba(250, 205, 0, 0.4) !important;
   transform: none;
 }
 
-.dark .bzrp-session-highlight>div {
+.dark .bzrp-session-highlight > div {
   background-color: #5a4a00 !important;
 }
 
@@ -67,7 +95,7 @@
   position: absolute;
   top: -12px;
   right: 12px;
-  background: #FACD00;
+  background: #facd00;
   color: black;
   font-size: 10px;
   font-weight: 900;
@@ -79,7 +107,6 @@
 }
 
 @keyframes sway {
-
   0%,
   100% {
     transform: rotate(-10deg);
@@ -97,7 +124,7 @@
 }
 
 ::selection {
-  background-color: #FACD00;
+  background-color: #facd00;
   color: #000000;
 }
 
@@ -108,25 +135,25 @@ html {
 /* Force dark mode background and text colors at the root level */
 html.dark,
 .dark body {
-  background-color: #0a0a0a !important;
+  background-color: #131313 !important;
   color: #fafafa !important;
 }
 
 body {
-  @apply bg-white dark:bg-[#0a0a0a] text-neutral-900 dark:text-neutral-100;
+  @apply bg-white dark:bg-[#131313] text-neutral-900 dark:text-neutral-100;
 }
 
 /* Specific component overrides for dark mode consistency */
 .dark .bg-white {
-  background-color: #0a0a0a;
+  background-color: rgba(19, 19, 19, 0.58);
 }
 
 .dark .bg-neutral-50 {
-  background-color: #111111;
+  background-color: rgba(17, 17, 17, 0.64);
 }
 
 .dark .bg-neutral-100 {
-  background-color: #1a1a1a;
+  background-color: rgba(26, 26, 26, 0.72);
 }
 
 .dark .border-neutral-200,
@@ -150,8 +177,8 @@ pre::-webkit-scrollbar {
   display: none;
 }
 
-input[type='text'],
-input[type='email'] {
+input[type="text"],
+input[type="email"] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
