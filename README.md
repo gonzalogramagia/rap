@@ -1,32 +1,30 @@
-# 🎶 Goalritmo - Premium Rap Lyrics, Battles & Talks Platform
+# 🎶 66oalritmo - Bizarrap Music Sessions & Lyrics Platform
 
-**The ultimate platform for rap lyrics, battles, and talks management, engineered to maximize brand engagement and visibility.**
+**The ultimate platform to exhibit and explore the 66 Bizarrap Music Sessions, featuring synchronized lyrics and deep search.**
 
-[Goalritmo](https://goalritmo.com) is a private, high-performance project that merges rap culture with strategic brand placement. We offer a premium, distraction-free environment where synchronized lyrics and deep search capabilities serve as the foundation for an immersive user experience.
+[66oalritmo](https://goalritmo.com) is a dedicated project to showcase Bizarrap's work. We provide a premium, distraction-free environment where every session is paired with its official lyrics, allowing fans to dive deep into the bars and the beats.
 
 ---
 
-## ✨ Premium Features
+## ✨ Features
 
-- **🎵 Goalritmo 🎵 Rap Lyrics**: A clean, content-first visual identity.
-- **🎤 Immersive Experience**: Synchronized lyrics display that keeps users engaged with the rhythm.
-- **🔍 Deep Search Algorithm**: Global search across lyrics and talk segments to find rhymes or specific statements instantly.
-- **⚡ Smart Navigation**: Automated scroll-to-lyric functionality that jumps to the exact line when opening a video from search.
-- **🌗 High-Impact Interface**: Minimalist design with a pure dark mode optimized to make visual content stand out.
-- **🌐 Dedicated URL**: Now live at [goalritmo.com](https://goalritmo.com).
-- **📱 Mobile Optimized**: Seamless experience across all devices.
+- **🎵 BZRP Sessions Focus**: Purpose-built to exhibit all 66 sessions.
+- **🎤 Synchronized Lyrics**: Follow every verse and rhyme exactly as it's delivered.
+- **🔍 Smart Search**: Find sessions by artist name, session number, or specific lines of lyrics.
+- **⚡ Fast Access**: One-click play and instant navigation.
+- **🌗 Dark Mode Optimized**: Minimalist design that highlights the neon aesthetics of the BZRP studio.
 
 ---
 
 ## 🛠️ Tech Stack
 
 - **Frontend**: React + TypeScript.
-- **Styling**: Tailwind CSS for a modern, high-speed interface.
+- **Styling**: Tailwind CSS / Vanilla CSS.
 - **Icons**: Lucide React.
-- **Data**: Local management with persistence for peak performance.
+- **Data**: Curated BZRP Music Sessions database.
 
 ---
 
 ## 🔒 Privacy & License
 
-This is a **private** project intended for strategic collaborations and brand partnerships. All rights reserved.
+This is a private project for exhibition purposes. All rights to the music and videos belong to Bizarrap and the respective artists.

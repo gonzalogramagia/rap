@@ -126,6 +126,10 @@ export default function VideoPlayerModal({ video, onClose }: VideoPlayerModalPro
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
                     />
+                    {/* Popcorn emoji for big screens */}
+                    <div className="absolute bottom-14 left-1/2 -translate-x-1/2 text-4xl pointer-events-none hidden lg:flex items-center justify-center select-none opacity-80 z-20">
+                        <span className="animate-sway">🍿</span>
+                    </div>
                 </div>
 
                 {/* Lyrics Section (Right) */}
@@ -179,8 +183,11 @@ export default function VideoPlayerModal({ video, onClose }: VideoPlayerModalPro
                             </div>
                         </>
                     ) : (
-                        <div className="flex-1 flex items-center justify-center p-6 text-neutral-900 dark:text-neutral-50 text-sm font-medium">
-                            No hay letra disponible
+                        <div className="flex-1 flex flex-col items-center justify-center p-12 text-center space-y-4">
+                            <div className="text-xl font-bold text-neutral-400 dark:text-zinc-600 animate-occasional-bounce select-none">
+                                Letra en proceso...
+                            </div>
+                            <div className="w-12 h-1 bg-[#FACD00]/20 rounded-full" />
                         </div>
                     )}
                 </div>
