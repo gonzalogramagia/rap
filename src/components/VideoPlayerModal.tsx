@@ -183,17 +183,11 @@ export default function VideoPlayerModal({
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-6xl bg-white dark:bg-zinc-950 rounded-2xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200 h-[90vh] md:h-[80vh] flex flex-col md:flex-row"
+        className="relative w-full max-w-6xl bg-white dark:bg-zinc-950 rounded-2xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200 h-[92vh] md:h-[80vh] flex flex-col md:flex-row"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Video Section (Left/Top) */}
-        <div className="relative flex-1 bg-black min-h-[300px] md:min-h-0">
-          <button
-            onClick={onClose}
-            className="absolute top-4 left-4 z-10 p-2 bg-black/50 hover:bg-black/70 rounded-full text-white/70 hover:text-white transition-all duration-300 cursor-pointer md:hidden hover:rotate-90 active:scale-90 group"
-          >
-            <X className="w-6 h-6 group-hover:text-[#48D1CC]" />
-          </button>
+        <div className="relative bg-black h-[34vh] sm:h-[36vh] md:h-auto md:min-h-0 md:flex-1 shrink-0">
           <iframe
             src={`${video.embedUrl}?autoplay=1`}
             title={video.name}
@@ -208,7 +202,7 @@ export default function VideoPlayerModal({
         </div>
 
         {/* Lyrics Section (Right) */}
-        <div className="w-full md:w-[380px] lg:w-[450px] flex flex-col bg-white dark:bg-zinc-950 border-t md:border-t-0 md:border-l border-neutral-100 dark:border-zinc-800 shrink-0 relative">
+        <div className="w-full md:w-[380px] lg:w-[450px] flex flex-col flex-1 min-h-0 md:flex-none bg-white dark:bg-zinc-950 border-t md:border-t-0 md:border-l border-neutral-100 dark:border-zinc-800 shrink-0 relative">
           <button
             onClick={onClose}
             className="absolute top-4 right-4 z-20 p-2 hover:bg-neutral-100 dark:hover:bg-white/10 rounded-full text-neutral-900 dark:text-neutral-50 transition-all duration-300 cursor-pointer hover:rotate-90 active:scale-90 group"
@@ -230,7 +224,7 @@ export default function VideoPlayerModal({
               </div>
               <div
                 ref={lyricsContainerRef}
-                className="flex-1 overflow-y-auto p-1/2 md:p-10 pt-2 md:pt-2 scrollbar-hide scroll-smooth"
+                className="flex-1 min-h-0 overflow-y-auto px-4 sm:px-5 md:px-10 pt-2 pb-4 md:pb-10 scrollbar-hide scroll-smooth"
               >
                 <pre className="whitespace-pre-line font-sans leading-relaxed text-lg font-medium text-neutral-900 dark:text-neutral-50">
                   {highlightedLyrics}
@@ -238,7 +232,7 @@ export default function VideoPlayerModal({
               </div>
 
               {/* Internal Search (Bottom Right) */}
-              <div className="p-6 bg-white dark:bg-zinc-950 border-t border-neutral-100 dark:border-zinc-800">
+              <div className="p-4 sm:p-5 md:p-6 bg-white dark:bg-zinc-950 border-t border-neutral-100 dark:border-zinc-800">
                 <div className="relative">
                   <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
                   <input
