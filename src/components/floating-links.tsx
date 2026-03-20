@@ -5,6 +5,7 @@ import { useLanguage } from '../contexts/language-context'
 export function FloatingLinks() {
     const { theme, toggleTheme } = useTheme()
     const { language, setLanguage } = useLanguage()
+    const iconColorClass = theme === 'dark' ? 'text-white' : 'text-black'
 
     return (
         <>
@@ -17,9 +18,9 @@ export function FloatingLinks() {
                     title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
                 >
                     {theme === 'dark' ? (
-                        <Sun className={`w-6 h-6 ${theme === 'dark' ? 'text-white' : 'text-black'} group-hover:text-[#FACD00] transition-colors`} />
+                        <Sun className={`w-6 h-6 ${iconColorClass} group-hover:text-[#FACD00] transition-colors`} />
                     ) : (
-                        <Moon className={`w-6 h-6 ${theme === 'dark' ? 'text-white' : 'text-black'} group-hover:text-[#FACD00] transition-colors`} />
+                        <Moon className={`w-6 h-6 ${iconColorClass} group-hover:text-[#FACD00] transition-colors`} />
                     )}
                 </button>
             </div>
@@ -32,7 +33,7 @@ export function FloatingLinks() {
                     aria-label="Toggle Language"
                     title={language === 'es' ? 'Switch to English' : 'Cambiar a Español'}
                 >
-                    <div className={`w-6 h-6 flex items-center justify-center font-black text-sm ${theme === 'dark' ? 'text-white' : 'text-black'} group-hover:text-[#FACD00] transition-colors tracking-tighter`}>
+                    <div className={`w-6 h-6 flex items-center justify-center font-black text-sm ${iconColorClass} group-hover:text-[#FACD00] transition-colors tracking-tighter`}>
                         {language === 'es' ? 'EN' : 'ES'}
                     </div>
                 </button>
