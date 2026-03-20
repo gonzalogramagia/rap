@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { useVideos, Video } from "../contexts/video-context";
 import { useLanguage } from "../contexts/language-context";
 import VideoPlayerModal from "./VideoPlayerModal";
-import { Search, Hash, SearchX, Play, X } from 'lucide-react';
+import { Search, SearchX, Play, ArrowLeftRight } from 'lucide-react';
 import { useTheme } from "../contexts/theme-context";
 
 function VideoItem({ children }: { children: React.ReactNode }) {
@@ -21,8 +21,10 @@ export function MusicBrowser() {
     const [search, setSearch] = useState("");
     const [activeTag, setActiveTag] = useState<string | null>(null);
     const [playingVideo, setPlayingVideo] = useState<Video | null>(null);
+    const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
     // Filter tags to show only those present in the current videos
+    /*
     const allTags = useMemo(() => {
         const tags = new Set<string>();
         videos.forEach(video => {
@@ -39,8 +41,9 @@ export function MusicBrowser() {
             return a.localeCompare(b);
         });
     }, [videos]);
+    */
 
-    // Filter videos based on search and active tag
+    // Filter and sort videos based on search, active tag, and sort order
     const filteredVideos = useMemo(() => {
         let result = videos;
 
@@ -48,15 +51,21 @@ export function MusicBrowser() {
             result = result.filter(video => video.tags.includes(activeTag));
         }
 
-        if (!search.trim()) return result;
+        if (search.trim()) {
+            const lowerSearch = search.toLowerCase();
+            result = result.filter(video =>
+                video.name.toLowerCase().includes(lowerSearch) ||
+                video.tags.some(tag => tag.toLowerCase().includes(lowerSearch)) ||
+                (video.lyrics && video.lyrics.toLowerCase().includes(lowerSearch))
+            );
+        }
 
-        const lowerSearch = search.toLowerCase();
-        return result.filter(video =>
-            video.name.toLowerCase().includes(lowerSearch) ||
-            video.tags.some(tag => tag.toLowerCase().includes(lowerSearch)) ||
-            (video.lyrics && video.lyrics.toLowerCase().includes(lowerSearch))
-        );
-    }, [videos, search, activeTag]);
+        return [...result].sort((a, b) => {
+            const numA = parseInt(a.id.split('-')[1]) || 0;
+            const numB = parseInt(b.id.split('-')[1]) || 0;
+            return sortOrder === "asc" ? numA - numB : numB - numA;
+        });
+    }, [videos, search, activeTag, sortOrder]);
 
     const getLyricSnippet = (video: Video, searchTerm: string) => {
         const lyrics = video.lyrics;
@@ -95,18 +104,20 @@ export function MusicBrowser() {
         );
     };
 
+    /*
     const getTagName = (tag: string) => {
         const key = 'tag_' + tag;
         const translation = t(key);
         return translation === key ? tag : translation;
     };
+    */
 
     return (
         <div className="space-y-4 md:space-y-8">
             <div className="flex flex-col md:flex-row items-center justify-center pt-0 pb-0 md:pt-0 md:pb-0 gap-0 md:gap-1 max-w-4xl mx-auto">
                 <img
                     src="/goalritmo.png"
-                    alt="Goalritmo Logo"
+                    alt="66oalritmo Logo"
                     onClick={() => window.open('https://youtu.be/xrDZpAq2w7g', '_blank')}
                     className="cursor-pointer h-64 md:h-80 w-auto object-contain hover:scale-110 hover:brightness-110 transition-all duration-500 -mt-8 -mb-4 md:mt-0 md:mb-0"
                     style={{
@@ -143,37 +154,29 @@ export function MusicBrowser() {
                             className="w-full pl-10 pr-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-[#48D1CC] transition-all text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400"
                         />
                     </div>
+                    <button
+                        onClick={() => setSortOrder(prev => prev === "asc" ? "desc" : "asc")}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-zinc-900 hover:border-[#48D1CC] hover:text-[#48D1CC] transition-all text-neutral-900 dark:text-neutral-100 cursor-pointer"
+                        title={sortOrder === "asc" ? "Orden ascendente" : "Orden descendente"}
+                    >
+                        <span className="text-sm font-bold">
+                            {sortOrder === "asc" ? "00" : "66"}
+                        </span>
+                        <ArrowLeftRight className={`w-4 h-4 text-[#FACD00] transition-transform duration-300 ${sortOrder === "desc" ? "rotate-180" : ""}`} />
+                        <span className="text-sm font-bold">
+                            {sortOrder === "asc" ? "66" : "00"}
+                        </span>
+                    </button>
                 </div>
 
-                {activeTag && (
-                    <div className="flex items-center justify-center md:justify-start cursor-pointer pb-2" onClick={() => setActiveTag(null)}>
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#48D1CC]/10 text-[#48D1CC] rounded-full text-xs font-bold hover:bg-[#48D1CC]/20 transition-colors">
-                            <Hash className="w-3.5 h-3.5" />
-                            {getTagName(activeTag)}
-                            <X className="w-3.5 h-3.5 ml-1" />
-                        </span>
-                    </div>
-                )}
-
-                {/* Tag Cloud */}
-                {allTags.length > 0 && !activeTag && (
-                    <div className="flex flex-wrap gap-2 justify-center md:justify-start pb-2 overflow-x-auto scrollbar-hide">
-                        {allTags.map(tag => (
-                            <button
-                                key={tag}
-                                onClick={() => setActiveTag(tag)}
-                                className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-neutral-100 dark:bg-zinc-900 border border-neutral-200 dark:border-zinc-800 hover:border-[#48D1CC] text-neutral-600 dark:text-neutral-400 rounded-lg text-xs transition-all cursor-pointer whitespace-nowrap"
-                            >
-                                <Hash className="w-3 h-3 text-[#48D1CC]" />
-                                {getTagName(tag)}
-                            </button>
-                        ))}
-                    </div>
-                )}
+                {/* Tag Cloud - Removed for now */}
             </div>
 
             {/* Video Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-20 pb-10">
+            <div
+                key={`${sortOrder}-${search}`}
+                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-20 pb-10"
+            >
                 {filteredVideos.length === 0 && (
                     <div className="col-span-full flex flex-col items-center justify-center py-20 text-neutral-500 space-y-4">
                         <div className="bg-neutral-100 dark:bg-zinc-900 p-4 rounded-full">
@@ -186,58 +189,66 @@ export function MusicBrowser() {
                     </div>
                 )}
 
-                {filteredVideos.map((video) => (
-                    <VideoItem key={video.id}>
-                        <div className="aspect-video bg-gray-100 dark:bg-zinc-800 relative group-hover:scale-105 transition-transform duration-500">
-                            {video.url && (
-                                <div
-                                    onClick={() => setPlayingVideo(video)}
-                                    className="block w-full h-full relative cursor-pointer"
-                                >
-                                    <img
-                                        src={`https://img.youtube.com/vi/${video.url.split('v=')[1]?.split('&')[0] || video.url.split('youtu.be/')[1]?.split('?')[0]}/hqdefault.jpg`}
-                                        alt={video.name}
-                                        className="w-full h-full object-cover"
-                                    />
-                                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors flex items-center justify-center">
-                                        <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-all duration-300">
-                                            <Play className="w-8 h-8 text-white fill-current ml-1" />
+                {filteredVideos.map((video, index) => {
+                    const isSpecial = video.id === 'bzrp-23';
+                    return (
+                        <div
+                            key={video.id}
+                            className={`animate-bzrp-appear ${isSpecial ? 'bzrp-session-highlight' : ''}`}
+                            style={{ animationDelay: `${Math.min(index * 50, 600)}ms` }}
+                        >
+                            <VideoItem>
+                                <div className="aspect-video bg-gray-100 dark:bg-zinc-800 relative group-hover:scale-105 transition-transform duration-500">
+                                    {video.url ? (
+                                        <div
+                                            onClick={() => setPlayingVideo(video)}
+                                            className="block w-full h-full relative cursor-pointer"
+                                        >
+                                            <img
+                                                src={`https://img.youtube.com/vi/${video.url.split('v=')[1]?.split('&')[0] || video.url.split('youtu.be/')[1]?.split('?')[0]}/hqdefault.jpg`}
+                                                alt={video.name}
+                                                className="w-full h-full object-cover"
+                                            />
+                                            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors flex items-center justify-center">
+                                                <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-all duration-300">
+                                                    <Play className="w-8 h-8 text-white fill-current ml-1" />
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    ) : (
+                                        <div className="w-full h-full flex flex-col items-center justify-center bg-neutral-100 dark:bg-zinc-900 text-neutral-400 p-4">
+                                            <div className="w-12 h-12 rounded-full border-2 border-dashed border-neutral-300 dark:border-neutral-700 flex items-center justify-center mb-3">
+                                                <Play className="w-6 h-6 opacity-30" />
+                                            </div>
+                                            <span className="text-sm font-bold tracking-wider uppercase opacity-50">Próximamente</span>
+                                        </div>
+                                    )}
                                 </div>
-                            )}
-                        </div>
 
-                        <div className="p-5">
-                            <h3
-                                className="font-bold text-neutral-900 dark:text-neutral-100 text-base leading-snug group-hover:text-[#48D1CC] transition-colors cursor-pointer line-clamp-2 min-h-[3rem]"
-                                title={video.name}
-                                onClick={() => {
-                                    if (search.trim()) {
-                                        localStorage.setItem('last-global-search', search.trim());
-                                    } else {
-                                        localStorage.removeItem('last-global-search');
-                                    }
-                                    setPlayingVideo(video);
-                                }}
-                            >
-                                {video.name}
-                            </h3>
-                            {search.trim() && getLyricSnippet(video, search)}
-                            <div className="flex flex-wrap gap-2 mt-4">
-                                {video.tags.map(tag => (
-                                    <span
-                                        key={tag}
-                                        onClick={() => setActiveTag(tag)}
-                                        className="text-[10px] uppercase tracking-wider px-2 py-1 bg-neutral-100 dark:bg-zinc-800 text-neutral-500 dark:text-neutral-400 rounded-md hover:bg-[#48D1CC]/10 hover:text-[#48D1CC] cursor-pointer transition-all font-bold"
+                                <div className="p-5">
+                                    <h3
+                                        className="font-bold text-neutral-900 dark:text-neutral-100 text-base leading-snug group-hover:text-[#48D1CC] transition-colors cursor-pointer line-clamp-2 min-h-[3rem]"
+                                        title={video.name}
+                                        onClick={() => {
+                                            if (video.url) {
+                                                if (search.trim()) {
+                                                    localStorage.setItem('last-global-search', search.trim());
+                                                } else {
+                                                    localStorage.removeItem('last-global-search');
+                                                }
+                                                setPlayingVideo(video);
+                                            }
+                                        }}
                                     >
-                                        #{getTagName(tag)}
-                                    </span>
-                                ))}
-                            </div>
+                                        {video.name}
+                                    </h3>
+                                    {search.trim() && getLyricSnippet(video, search)}
+                                    {/* Tags removed for now */}
+                                </div>
+                            </VideoItem>
                         </div>
-                    </VideoItem>
-                ))}
+                    );
+                })}
             </div>
 
             {playingVideo && (

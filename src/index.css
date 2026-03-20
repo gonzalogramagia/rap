@@ -28,6 +28,69 @@
   animation: occasional-bounce 5s infinite;
 }
 
+@keyframes bzrp-appear {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+    filter: blur(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.animate-bzrp-appear {
+  animation: bzrp-appear 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.bzrp-session-highlight {
+  position: relative;
+  z-index: 10;
+}
+
+.bzrp-session-highlight>div {
+  border-color: #FACD00 !important;
+  box-shadow: 0 0 30px rgba(250, 205, 0, 0.4) !important;
+  transform: scale(1.02);
+}
+
+.bzrp-session-highlight::after {
+  content: "LEGENDARY SESSION";
+  position: absolute;
+  top: -12px;
+  right: 12px;
+  background: #FACD00;
+  color: black;
+  font-size: 10px;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 12px rgba(250, 205, 0, 0.4);
+  z-index: 20;
+}
+
+@keyframes sway {
+
+  0%,
+  100% {
+    transform: rotate(-10deg);
+  }
+
+  50% {
+    transform: rotate(10deg);
+  }
+}
+
+.animate-sway {
+  animation: sway 3s ease-in-out infinite;
+  transform-origin: center;
+  display: inline-block;
+}
+
 ::selection {
   background-color: #47a3f3;
   color: #fefefe;
