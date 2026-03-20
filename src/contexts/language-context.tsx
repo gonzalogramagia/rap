@@ -29,24 +29,22 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const translations: Record<Language, Record<string, string>> = {
     es: {
-      searchPlaceholder: "Buscar letras...",
-      noResultsFor: "No se encontraron resultados para",
-      headline_part1: "Encuentra canciones, batallas o charlas de rap",
-      headline_part2: "¡al instante!",
-      tag_Batalla: "Batalla",
-      tag_FMS: "FMS",
-      tag_Canción: "Canción",
-      tag_Charla: "Charla",
+      searchPlaceholder: "Buscar sesiones o letras...",
+      noResultsFor: "No se encontraron sesiones para",
+      headline_part1: "Bizarrap Music Sessions",
+      headline_part2: "Las 66 Sesiones",
+      tag_Session: "Sesión",
+      tag_BZRP: "BZRP",
+      tag_Music: "Música",
     },
     en: {
-      searchPlaceholder: "Search rap...",
-      noResultsFor: "No results for",
-      headline_part1: "Find rap songs, battles or talks",
-      headline_part2: "instantly!",
-      tag_Batalla: "Battle",
-      tag_FMS: "FMS",
-      tag_Canción: "Song",
-      tag_Charla: "Talk",
+      searchPlaceholder: "Search sessions or lyrics...",
+      noResultsFor: "No sessions found for",
+      headline_part1: "Bizarrap Music Sessions",
+      headline_part2: "The 66 Sessions",
+      tag_Session: "Session",
+      tag_BZRP: "BZRP",
+      tag_Music: "Music",
     },
   };
 
@@ -59,8 +57,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   );
 
   useEffect(() => {
-    const title = "Goalritmo 🎵 Rap Lyrics";
-    const description = "Plataforma premium de letras de rap, batallas y charlas. Gestiona tu contenido y conecta con tu audiencia.";
+    const title = "🎵";
+    const description = "Colección exclusiva de las 66 Bizarrap Music Sessions con letras sincronizadas y búsqueda inteligente.";
     const fullImageUrl = `https://goalritmo.com/goalritmo.png`;
     const siteUrl = "https://goalritmo.com";
 
