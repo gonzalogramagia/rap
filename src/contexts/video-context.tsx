@@ -22,7 +22,7 @@ interface VideoContextType {
 
 const VideoContext = createContext<VideoContextType | undefined>(undefined);
 
-const STORAGE_KEY = "bzrp_sessions_v6";
+const STORAGE_KEY = "bzrp_sessions_v7";
 
 const getEmbedUrl = (url: string): string | undefined => {
   try {
@@ -50,6 +50,71 @@ export const VideoProvider = ({ children }: { children: ReactNode }) => {
   const [videos, setVideos] = useState<Video[]>([]);
 
   useEffect(() => {
+    const daddyYankeeLyrics = `Daddy Yankee! || ¡Daddy Yankee!
+
+A new season has started, hit play (play) || Nueva temporada ya empezó, dale play (play)
+Bass is thumping, Bizarrap, feel that bass || Sonido del bajo, Bizarrap, suena el bass
+Code 787, a.k.a El Calentón || Código 787, alias El Calentón
+Bring in the drums, 'cause reggaeton just came on || Pon la batería, que llegó el reggaeton
+
+What is good has entered your home || Que lo bueno se metió pa' tu casa
+A King without mystery, lifting up His people || Rey sin misterio levantando la raza
+I walk with the power that breaks all evil || Ando con el poder que to' los male' arrasa
+Everyone's asking me: What's going on? || To' el mundo me dice: ¿Qué te pasa?
+
+If you ask me, I owe nobody a thing || Si me pregunta', a nadie yo le debo
+When I leave this place, I'm taking nothing || Cuando me vaya de aquí, nada me llevo
+Just leaving with a true love in my heart || Solo me voy con un amor verdadero
+Feet on the ground, always looking to Heaven || Los pie' en la tierra, siempre mirando al cielo
+
+Daddy! || ¡Daddy!
+
+The kid's sharp, you can tell he's from the hood || Fino es el chamaco y se le nota el barrio
+My flow's eternal, no longer just legendary || Mi flow es eterno, ya no es legendario
+I ain't talking dollars, but I bring the change || No te 'toy hablando de dólar, pero traigo el cambio
+It's my Father who fills up the stadium || Es mi Father quien llena el estadio
+
+With me on all the paths, the one who brings the vitamin || Conmigo pa' tos' lao' camina, es quién me pone la vitamina
+The real gasoline, -line (fire up the engines) || La verdadera gasolina, -lina (prendan los motore')
+Doesn't leave me hanging on the corner, from Santurce to Argentina || No me deja para'o en la esquina, de Santurce pa' Argentina
+What do you want me to say? || ¿Qué tú quiere' que te diga?
+
+If you ask me, I owe nobody a thing || Si me pregunta', a nadie yo le debo
+When I leave this place, I'm taking nothing || Cuando me vaya de aquí, nada me llevo
+Just leaving with a true love in my heart || Solo me voy con un amor verdadero
+Feet on the ground, always looking to Heaven || Los pie' en la tierra, siempre mirando al cielo
+
+Massive! || ¡Masivo!
+(start the engines) || (Prendan los motore')
+Fire! || ¡Fuego!
+
+Bi-Bi-Biza, get your visa (what?) || Bi-Bi-Biza, búscate la visa (what?)
+That's the one on top, enemies don't give a heads up (what?) || Que sea la de arriba, que el enemigo no avisa (what?)
+You're seeing a man rising from the ashes (what?) || Están viendo un hombre que renace de las ceniza' (what?)
+Nothing stops this, not even the border patrol, ready || Esto no lo para ni la patrulla fronteriza, stop
+
+A new season has started, hit play || Nueva temporada ya empezó, dale play
+Bass is thumping, Bizarrap, feel that bass || Sonido del bajo, Bizarrap, suena el bass
+Code 787, a.k.a El Calentón || Código 787, alias El Calentón
+Bring in the drums, 'cause reggaeton just came on || Pon la batería, que llegó el reggaeton
+
+What is good has entered your home || Que lo bueno se metió pa' tu casa
+A King without mystery, lifting up His people || Rey sin misterio levantando la raza
+I walk with the power that breaks all evil || Ando con el poder que to' los male' arrasa
+Everyone's asking me: What's going on? || To' el mundo me dice: ¿Qué te pasa?
+
+If you ask me, I owe nobody a thing || Si me pregunta', a nadie yo le debo
+When I leave this place, I'm taking nothing || Cuando me vaya de aquí, nada me llevo
+Just leaving with a true love in my heart || Solo me voy con un amor verdadero
+Feet on the ground, always looking to Heaven || Los pie' en la tierra, siempre mirando al cielo
+
+Fire! || ¡Fuego!
+Fire! || ¡Fuego!
+(Play that mambo so my girls start the engines!) || (Zúmbale mambo pa' que mis gatas prendan los motore')
+(Start the engines) || (Prendan los motore')
+
+Bizarrap || Bizarrap`;
+
     const createSession = (
       num: number,
       artist: string,
@@ -69,7 +134,7 @@ export const VideoProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const defaultVideos: Video[] = [
-      createSession(0, "DADDY YANKEE", "qNw8ejrI0nM"),
+      createSession(0, "DADDY YANKEE", "qNw8ejrI0nM", [], daddyYankeeLyrics),
       createSession(1, "BHAVI", "ybo9fpwTFto"),
       createSession(2, "ECKO", "Es7IKbFoDHc"),
       createSession(3, "PACO AMOROSO", "-smN6ZUHzgk"),

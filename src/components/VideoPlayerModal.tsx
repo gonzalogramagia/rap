@@ -2,6 +2,7 @@ import { X, Search as SearchIcon } from "lucide-react";
 import { Video } from "../contexts/video-context";
 import { useEffect, useState, useMemo, useRef } from "react";
 import { createPortal } from "react-dom";
+import { useLanguage } from "../contexts/language-context";
 
 interface VideoPlayerModalProps {
   video: Video;
@@ -12,6 +13,7 @@ export default function VideoPlayerModal({
   video,
   onClose,
 }: VideoPlayerModalProps) {
+  const { language } = useLanguage();
   const [lyricsSearch, setLyricsSearch] = useState("");
   const [currentMatchIndex, setCurrentMatchIndex] = useState(0);
   const lyricsContainerRef = useRef<HTMLDivElement>(null);
@@ -106,6 +108,43 @@ export default function VideoPlayerModal({
 
   const highlightedLyrics = useMemo(() => {
     if (!video.lyrics) return null;
+
+    const lines = video.lyrics.split("\n");
+    const hasBilingualLines = lines.some((line) => line.includes(" || "));
+
+    if (hasBilingualLines) {
+      return (
+        <>
+          {lines.map((line, i) => {
+            if (!line.trim()) return <br key={`br-${i}`} />;
+
+            if (!line.includes(" || ")) {
+              return (
+                <span key={`line-${i}`} className="block opacity-80">
+                  {line}
+                </span>
+              );
+            }
+
+            const [enRaw, esRaw] = line.split(" || ");
+            const en = enRaw?.trim() ?? "";
+            const es = esRaw?.trim() ?? "";
+
+            const primary = language === "en" ? en : es;
+            const secondary = language === "en" ? es : en;
+
+            return (
+              <span key={`line-${i}`} className="block mb-1">
+                <span className="font-semibold text-[#FACD00]">{primary}</span>
+                <span className="text-neutral-500 dark:text-neutral-400">{"  ·  "}</span>
+                <span className="opacity-70">{secondary}</span>
+              </span>
+            );
+          })}
+        </>
+      );
+    }
+
     if (!lyricsSearch.trim()) return video.lyrics;
 
     const parts = video.lyrics.split(new RegExp(`(${lyricsSearch})`, "gi"));
