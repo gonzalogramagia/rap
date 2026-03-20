@@ -16,7 +16,7 @@ function VideoItem({ children }: { children: React.ReactNode }) {
 export function MusicBrowser() {
     const { theme } = useTheme();
     const { videos } = useVideos();
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
     const playlistUrl = 'https://www.youtube.com/playlist?list=PLLswL1pDm9IxcKcBy5MbMFljNnQs2WVx8';
 
     const [search, setSearch] = useState("");
@@ -114,7 +114,7 @@ export function MusicBrowser() {
     */
 
     return (
-        <div className="space-y-4 md:space-y-8">
+        <div className="space-y-4 md:space-y-8 overflow-x-clip">
             <div className="flex flex-col md:flex-row items-center justify-center pt-0 pb-0 md:pt-0 md:pb-0 gap-0 md:gap-1 max-w-4xl mx-auto">
                 <img
                     src="/goalritmo.png"
@@ -136,7 +136,7 @@ export function MusicBrowser() {
                                 onClick={() => window.open(playlistUrl, '_blank', 'noopener,noreferrer')}
                                 title="Abrir playlist en YouTube"
                             >
-                                {t('headline_part2')}
+                                {language === 'en' ? 'The 66' : 'Las 66'}
                             </span>
                         </>
                     </h1>
@@ -144,7 +144,7 @@ export function MusicBrowser() {
             </div>
 
             {/* Sticky Header */}
-            <div className="sticky top-0 z-10 bg-white dark:bg-[#0a0a0a] py-2 md:py-4 border-b border-neutral-200 dark:border-neutral-800 space-y-3">
+            <div className="sticky top-0 z-50 bg-white dark:bg-[#0a0a0a] py-2 md:py-4 border-b border-neutral-200 dark:border-neutral-800 space-y-3">
                 <div className="flex items-center gap-4">
                     <div className="relative flex-1">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 w-5 h-5" />
@@ -156,18 +156,18 @@ export function MusicBrowser() {
                             onFocus={() => {
                                 if (activeTag) setActiveTag(null);
                             }}
-                            className="w-full pl-10 pr-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-[#48D1CC] transition-all text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400"
+                            className="w-full pl-10 pr-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-[#FACD00] transition-all text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400"
                         />
                     </div>
                     <button
                         onClick={() => setSortOrder(prev => prev === "asc" ? "desc" : "asc")}
-                        className="flex items-center gap-2 px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-zinc-900 hover:border-[#48D1CC] hover:text-[#48D1CC] transition-all text-neutral-900 dark:text-neutral-100 cursor-pointer"
+                        className="group flex items-center gap-2 px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-zinc-900 hover:border-[#FACD00] transition-all text-neutral-900 dark:text-neutral-100 cursor-pointer"
                         title={sortOrder === "asc" ? "Orden ascendente" : "Orden descendente"}
                     >
                         <span className="text-sm font-bold">
                             {sortOrder === "asc" ? "00" : "66"}
                         </span>
-                        <ArrowLeftRight className={`w-4 h-4 text-[#FACD00] transition-transform duration-300 ${sortOrder === "desc" ? "rotate-180" : ""}`} />
+                        <ArrowLeftRight className={`w-4 h-4 ${theme === 'dark' ? 'text-white' : 'text-black'} group-hover:text-[#FACD00] transition-all duration-300 ${sortOrder === "desc" ? "rotate-180" : ""}`} />
                         <span className="text-sm font-bold">
                             {sortOrder === "asc" ? "66" : "00"}
                         </span>
@@ -232,7 +232,7 @@ export function MusicBrowser() {
 
                                 <div className="p-5">
                                     <h3
-                                        className="font-bold text-neutral-900 dark:text-neutral-100 text-base leading-snug group-hover:text-[#48D1CC] transition-colors cursor-pointer line-clamp-2 min-h-[3rem]"
+                                        className={`font-bold text-neutral-900 dark:text-neutral-100 text-base leading-snug transition-colors cursor-pointer line-clamp-2 min-h-[3rem] ${isSpecial ? 'group-hover:text-white' : 'group-hover:text-[#48D1CC]'}`}
                                         title={video.name}
                                         onClick={() => {
                                             if (video.url) {

@@ -26,7 +26,7 @@ function AppContent() {
       <footer className="pb-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
         <a
           href="https://www.bizarrap.com/bzrp"
-          className="hover:text-[#48D1CC] transition-colors"
+          className="hover:text-[#FACD00] transition-colors"
         >
           Averiguá bien 👀
         </a>
